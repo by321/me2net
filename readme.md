@@ -15,7 +15,7 @@ Run "python me2net.py" will print an overview of the usage:
 
 Usage: me2net.py [OPTIONS] COMMAND [ARGS]...
 
-    Options:
+	Options:
 	--version             Show the version and exit.
 	-model model          select model: 'u2net', 'u2netp', or 'face'  [default: u2net]
 	-mu [0|1|2]           mask usage  [default: 0]
