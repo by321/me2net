@@ -107,7 +107,7 @@ or use the -bi option to set an image as the new background.
 - Python version 3.9 or later. Create a virtual environment if you want to.
 - Clone this repository.
 - Run "pip install -r requirements.txt".
-- Go to https://pytorch.org/ and install the appropriate version of PyTorch for your system.
+- Go to https://pytorch.org/ and install the appropriate build of PyTorch for your system.
 - Download these two model files and save them to pretrained_models directory:
 --[u2net.pth, about 170 MB](https://drive.google.com/file/d/1ao1ovG1Qtx4b7EoskHXmi2E9rp5CHLcZ/view "u2net.pth")
 --[u2netp.pth, about 4.5 MB](https://drive.google.com/file/d/1rbSTGKAE-MTxBYHd-51l2hMOQPT_7EPy/view "u2netp.pth")
