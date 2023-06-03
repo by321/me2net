@@ -1,4 +1,4 @@
-## Me2net - automatic image background removal and replacement
+## Me2net - automatic image foreground and face extraction, background removal and replacement
 
 Me2net, based on [MediaPipe](https://developers.google.com/mediapipe "MediaPipe") and [U²-Net](https://github.com/xuebinqin/U-2-Net "u2net"), is an automatic foreground detection and background removal and replacement tool written in Python. 
 
