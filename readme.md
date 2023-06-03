@@ -2,16 +2,12 @@
 
 Me2net, based on [MediaPipe](https://developers.google.com/mediapipe "MediaPipe") and [U²-Net](https://github.com/xuebinqin/U-2-Net "u2net"), is an automatic foreground detection and background removal and replacement tool written in Python. 
 
-- automatically detect image foregound and background, or
+- automatically detect foregound (salient object) and background in images, or
 - automatically detect face (forehead to chin) as foreground
 - replace image background with a solid color or another image
 - process one image file, a directory of files, or RGB24 image data piped to standard input
 - fast enough to run on CPU only, GPU automatically supported via PyTorch
 - support multi-threaded processing, most useful when running in CPU mode
-
-U²-Net is a deep learning model, the original research paper is here: [U²-Net: Going Deeper with Nested U-Structure for Salient Object Detection](U2-Net: Going Deeper with Nested U-Structure for Salient Object Detection "U2-Net: Going Deeper with Nested U-Structure for Salient Object Detection").
-
-
 
 ## Usage
 
@@ -19,10 +15,9 @@ Run "python me2net.py" will print an overview of the usage:
 
 Usage: me2net.py [OPTIONS] COMMAND [ARGS]...
 
-	Options:
+    Options:
 	--version             Show the version and exit.
-	-model model          select model: 'u2net', 'u2netp', or 'face'  [default:
-							u2net]
+	-model model          select model: 'u2net', 'u2netp', or 'face'  [default: u2net]
 	-mu [0|1|2]           mask usage  [default: 0]
 	-im                   invert detected foreground mask
 	-t INTEGER RANGE      number of worker threads  [default: 1; x>=1]
