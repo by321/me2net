@@ -9,14 +9,14 @@ Me2net, based on [MediaPipe](https://developers.google.com/mediapipe "MediaPipe"
 - fast enough to run on CPU only, GPU automatically supported via PyTorch
 - support multi-threaded processing, most useful when running in CPU mode
 
-![fishing boat](image/fishing_boat.jpg)
-![water drop](image/waterdrop.jpg)
-![giant road tiger](image/giant_road_tiger.jpg)
-![Trump Obama](image/to0.jpg)
+![fishing boat](images/fishing_boat.jpg)
+![water drop](images/waterdrop.jpg)
+![giant road tiger](images/giant_road_tiger.jpg)
+![Trump Obama](images/to0.jpg)
 
 Runing in face detection mode (the "-model face" option):
 
-![Trump Obama face only](image/to1.jpg)
+![Trump Obama face only](images/to1.jpg)
 
 
 ## Usage
