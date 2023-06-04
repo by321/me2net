@@ -16,6 +16,8 @@ def GetFaceMask(theCtx:dict,img:Image) -> Image:
     detector=theCtx['face_detector']
     detection_result = detector.detect(image)
     #print(detection_result)
+    if 0==len(detection_result.face_landmarks):
+        print("warning: no face detected",file=sys.stderr)
     for facelandmark in detection_result.face_landmarks:
         face_landmarks_proto = landmark_pb2.NormalizedLandmarkList()
         face_landmarks_proto.landmark.extend([

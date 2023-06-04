@@ -14,10 +14,10 @@ Me2net, based on [MediaPipe](https://developers.google.com/mediapipe "MediaPipe"
 ![giant road tiger](images/giant_road_tiger.jpg)
 ![Trump Obama](images/to0.jpg)
 
-Runing in face detection mode (the "-model face" option):
+Face detection mode (the "-model face" option):
 
 ![Trump Obama face only](images/to1.jpg)
-
+![American Gothic](images/american_gothic.jpg)
 
 ## Usage
 
