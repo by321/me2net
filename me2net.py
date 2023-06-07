@@ -21,7 +21,7 @@ EPILOG = """The mask usage option (-mu, --mask-usage):
 
 
 @click.group(epilog=EPILOG)
-@click.version_option(version=1)
+@click.version_option(version="1.1")
 
 @click.option("-model",metavar="model",default="u2net",
     type=click.Choice(["u2net","u2netp","face"]),
