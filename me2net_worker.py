@@ -14,9 +14,9 @@ def CommonInit(theCtx:dict):
     else:
         global func_mp
         import func_mp
-        fd=func_mp.GetFaceDetector()
-        if fd is None: sys.exit(-1)
-        theCtx['face_detector']=fd
+        i=func_mp.InitMediaPipe(theCtx)
+        if i!=0: sys.exit(i)
+        
         theCtx['GetForeGroundMask']=func_mp.GetFaceMask
  
 def _AdjustBackgroundImage(bgOriginal:Image,bgCached:Image,toSize,toMode)->Image:

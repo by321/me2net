@@ -1,10 +1,9 @@
 Pillow
 click
 numpy
-
-# Test with mediapip 0.10.0, but you should probably try the latest first
-#mediapipe==0.10.0
-mediapipe
+opencv_contrib_python==4.7.0.72
+opencv_python==4.7.0.72
+mediapipe==0.10.0
 
 # Tested with the following torch packages, but you should probably go to
 # https://pytorch.org/ and install the latest appropriate build of PyTorch for your system
