@@ -20,7 +20,9 @@ class REBNCONV(nn.Module):
 ## upsample tensor 'src' to have the same spatial size with tensor 'tar'
 def _upsample_like(src,tar):
 
-    src = F.upsample(src,size=tar.shape[2:],mode='bilinear')
+    #src = F.upsample(src,size=tar.shape[2:],mode='bilinear')
+    #warnings.warn("nn.functional.upsample is deprecated. Use nn.functional.interpolate instead.")
+    src = F.interpolate(src,size=tar.shape[2:],mode='bilinear')
 
     return src
 

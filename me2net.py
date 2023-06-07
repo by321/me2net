@@ -1,4 +1,4 @@
-import sys, click, traceback
+import os, sys, click, traceback
 
 # This file deals with command line only. If the command line is parsed successfully,
 # then we call one of the functions in me2net_worker.py.
@@ -37,6 +37,9 @@ EPILOG = """The mask usage option (-mu, --mask-usage):
 @click.option("-t","threads",default=1,type=click.IntRange(1),
     show_default=True, help="number of worker threads")
 
+@click.option("-fs","face_scale", help="scale factor for face outline",default=1,show_default=True,
+              type=click.FloatRange(min=0.1,max=10))
+
 @click.option("-bc","background_color", nargs=3, type=click.IntRange(0,255),default=[128,128,128],
     show_default=False, help="set background RGB color values, default: 128 128 128")
 
@@ -45,7 +48,7 @@ EPILOG = """The mask usage option (-mu, --mask-usage):
 
 @click.pass_context
 # not using **kwargs so I can see all options listed in one place
-def cli(ctx, model, mask_usage,invert_mask,threads,background_color,background_image):
+def cli(ctx, model, mask_usage,invert_mask,threads,background_color,background_image,face_scale):
     # ensure that ctx.obj exists and is a dict (in case `cli()` is called
     # by means other than the `if` block below)
     ctx.ensure_object(dict)
@@ -55,6 +58,7 @@ def cli(ctx, model, mask_usage,invert_mask,threads,background_color,background_i
     ctx.obj['threads'] = threads
     ctx.obj['background_color']=background_color
     ctx.obj['background_image']=background_image
+    ctx.obj['face_scale']=face_scale
 
 @cli.command(name="file", help="process one image file")
 @click.argument("input_file", type=click.Path(exists=True, file_okay=True, dir_okay=False, readable=True))
@@ -94,7 +98,7 @@ def cmd_rs(ctx,image_width,image_height,output_specifier):
 
 if __name__ == '__main__':
     try:
-        cli(obj={},allow_interspersed_args =True)
+        cli(obj={},allow_interspersed_args =True,max_content_width=max(80,os.get_terminal_size().columns))
     except Exception as e:
         print(traceback.format_exc())
         sys.exit(-1)

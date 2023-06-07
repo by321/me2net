@@ -1,4 +1,4 @@
-import os, sys
+import os, sys, threading
 import mediapipe as mp
 from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
@@ -11,15 +11,15 @@ def GetFaceMask(theCtx:dict,img:Image) -> Image:
     maskImg=Image.new('L',size=img.size,color=0)
 
     haar=theCtx['haar_cascade']
+    #haar=GetHaarCascade()
     cv_img = np.array(img.convert("L"))
-    faces_rect = haar.detectMultiScale(cv_img, scaleFactor=1.1, minNeighbors=3,minSize=(64,64))
-    #if 0==len(faces_rect):
-    #    if theCtx['invert_mask']: maskImg=ImageOps.invert(maskImg)
-    #    return maskImg
-    landmarker=theCtx['mp_face_landmarker']
+    with theCtx['cascade_classifier_lock']:
+        faces_rect = haar.detectMultiScale(cv_img, scaleFactor=1.1, minNeighbors=3,minSize=(64,64))
 
+    landmarker=theCtx['mp_face_landmarker']
     vidx = theCtx['mp_face_oval']
     nFound:int=0
+    face_scale=theCtx['face_scale']
     for x, y, w, h in faces_rect: #open cv Rect coordinates are [inclusive,exclusive)
         x0,x1=int(x-w/3), int(x+w+w/3)
         y0,y1=int(y-h/2), int(y+h+h/3)
@@ -52,18 +52,17 @@ def GetFaceMask(theCtx:dict,img:Image) -> Image:
         #print(vertices)
         v2=[]
         for xy in vertices:
-            x2=ctrx+(xy[0]-ctrx)*1
-            y2=ctry+(xy[1]-ctry)*1
+            x2=ctrx+(xy[0]-ctrx)*face_scale
+            y2=ctry+(xy[1]-ctry)*face_scale
             v2.append( ( round(imgcrop.size[0]*x2)+x0, round(imgcrop.size[1]*y2)+y0 ) )
-        #vertices=cv2.convexHull(np.asarray(v2)) # why does it return a [[[]...]] ?
-        #v2 = [xy for sublist in vertices for item in sublist for xy in item]
         ImageDraw.Draw(maskImg).polygon(v2,fill=255,outline=255)
+        #ImageDraw.Draw(img).polygon(v2,fill=None,outline=255) #testing cx
 
     if 0==nFound:
         print("warning: no face detected",file=sys.stderr)
         fImg=maskImg
     else:
-        fImg=maskImg.filter(ImageFilter.BoxBlur(5))
+        fImg=maskImg.filter(ImageFilter.BoxBlur(1))
     if theCtx['invert_mask']: fImg=ImageOps.invert(fImg)
     return fImg
     
@@ -105,7 +104,7 @@ def GetFaceMask2(theCtx:dict,img:Image) -> Image:
         #print(vertices3)
         ImageDraw.Draw(maskImg).polygon(v2,fill=255,outline=255)
 
-    fImg=maskImg.filter(ImageFilter.BoxBlur(5))
+    fImg=maskImg.filter(ImageFilter.BoxBlur(3))
     if theCtx['invert_mask']: fImg=ImageOps.invert(fImg)
     return fImg
 
@@ -149,10 +148,18 @@ def GetHaarCascade():
     return haar_cascade
 
 def InitMediaPipe(theCtx:dict)->int:
+    print(f"openCV thread count:",cv2.getNumThreads())
+
     fd=GetHaarCascade()
     if fd is None: return -1
     theCtx['haar_cascade']=fd
-        
+
+    ### OpenCV's cascade classifier is not multithread-safe, but may be internally multi-threaded.
+    ### By default, openCV uses one thread per core, so using its classifier with a mutex is an
+    ### OK approach. To get max performance, we should create a classifier for each
+    ### thread, and tune the number of threads we use and openCV uses.
+    theCtx['cascade_classifier_lock']=threading.Lock()
+
     fd=GetMediaPipeFaceOval()
     if fd is None: return -2
     theCtx['mp_face_oval']=fd
@@ -160,5 +167,4 @@ def InitMediaPipe(theCtx:dict)->int:
     fd=GetMediaPipeLandmarker()
     if fd is None: return -3
     theCtx['mp_face_landmarker']=fd
-
     return 0

@@ -69,6 +69,7 @@ def _SaveOutputFile(theCtx:dict,inputImg:Image,maskImg:Image,imgBG:Image,output_
             imgBG = Image.new('RGB', inputImg.size, theCtx['background_color'])
         #print(f"{inputImg.size} {imgBG.size}")    
         imgC=Image.composite(inputImg,imgBG,maskImg)
+        #imgC=inputImg #testing cx
         imgC.save(output_file,format="PNG")
     else:
         print(f"unexpected output mode: {mu}")
