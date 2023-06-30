@@ -1,4 +1,4 @@
-import os, sys, click, traceback
+import sys, click, traceback
 
 # This file deals with command line only. If the command line is parsed successfully,
 # then we call one of the functions in me2net_worker.py.
@@ -21,7 +21,7 @@ EPILOG = """The mask usage option (-mu, --mask-usage):
 
 
 @click.group(epilog=EPILOG)
-@click.version_option(version="1.1")
+@click.version_option(version="1.2")
 
 @click.option("-model",metavar="model",default="u2net",
     type=click.Choice(["u2net","u2netp","face"]),
@@ -98,7 +98,7 @@ def cmd_rs(ctx,image_width,image_height,output_specifier):
 
 if __name__ == '__main__':
     try:
-        cli(obj={},allow_interspersed_args =True,max_content_width=max(80,os.get_terminal_size().columns))
+        cli(obj={},allow_interspersed_args =True,max_content_width=96)
     except Exception as e:
         print(traceback.format_exc())
         sys.exit(-1)
