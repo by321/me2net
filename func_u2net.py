@@ -17,6 +17,9 @@ def GetU2NetModel(model_name:str) -> nn.Module:
     elif(model_name=='u2netp'):
         model_filename="u2netp.pth"
         net = U2NETP(3,1)
+    elif(model_name=='u2neths'):
+        model_filename="u2net_human_seg.pth"
+        net = U2NET(3,1)
     else:
         print(f"unexpected model name: {model_name}")
         return None

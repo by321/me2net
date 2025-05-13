@@ -24,8 +24,8 @@ EPILOG = """The mask usage option (-mu, --mask-usage):
 @click.version_option(version="1.2")
 
 @click.option("-model",metavar="model",default="u2net",
-    type=click.Choice(["u2net","u2netp","face"]),
-    show_default=True, show_choices=True, help="select model: 'u2net', 'u2netp', or 'face'" )
+    type=click.Choice(["u2net","u2netp","u2neths","face"]),
+    show_default=True, show_choices=True, help="select model: 'u2net', 'u2netp', 'u2neths', or 'face'" )
 
 @click.option("-mu","mask_usage",default='0',
     type=click.Choice(['0','1','2']),

@@ -27,7 +27,7 @@ Run "python me2net.py" will print an overview of the usage:
 
 	Options:
 	--version             Show the version and exit.
-	-model model          select model: 'u2net', 'u2netp', or 'face'  [default: u2net]
+	-model model          select model: 'u2net', 'u2netp', 'unetphs', or 'face'  [default: u2net]
 	-mu [0|1|2]           mask usage  [default: 0]
 	-im                   invert detected foreground mask
 	-t INTEGER RANGE      number of worker threads  [default: 1; x>=1]
@@ -112,11 +112,14 @@ or use the -bi option to set an image as the new background.
 - Clone this repository.
 - Run "pip install -r requirements.txt".
 - Go to https://pytorch.org/ and install the appropriate build of PyTorch for your system.
-- Download these two model files and save them to pretrained_models directory:
+- Download these model files and save them to pretrained_models directory:
 
 	-[u2net.pth, about 170 MB](https://drive.google.com/file/d/1ao1ovG1Qtx4b7EoskHXmi2E9rp5CHLcZ/view "u2net.pth")
 	
 	-[u2netp.pth, about 4.5 MB](https://drive.google.com/file/d/1rbSTGKAE-MTxBYHd-51l2hMOQPT_7EPy/view "u2netp.pth")
+
+	-[u2net_human_seg.pth, about 170 MB](https://drive.google.com/file/d/1m_Kgs91b21gayc2XLW0ou8yugAIadWVP/view "u2net_human_seg.pth")
+
 
 ## References
 

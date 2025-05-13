@@ -3,7 +3,7 @@ from PIL import Image
 
 def CommonInit(theCtx:dict):
     _PrepareBackgroundImage(theCtx)
-    if theCtx['model'] in ['u2net','u2netp']:
+    if theCtx['model'] in ['u2net','u2netp','u2neths']:
         global func_u2net
         import func_u2net
         net=func_u2net.GetU2NetModel(theCtx['model'])
@@ -78,7 +78,7 @@ def _SaveOutputFile(theCtx:dict,inputImg:Image,maskImg:Image,imgBG:Image,output_
 
 def _GetForegroundMask(theCtx:dict,i1:Image) -> Image:
     return theCtx['GetForeGroundMask'](theCtx,i1)
-    #if theCtx['model'] in ['u2net','u2netp']:
+    #if theCtx['model'] in ['u2net','u2netp', 'u2neths']:
     #    return u2net_func.GetForegroundMask(theCtx,i1)
     #else:
     #    return mp_func.GetFaceMask(theCtx,i1)
@@ -205,7 +205,7 @@ def ReadStdin(theCtx:dict,image_width:int,image_height:int,output_specifier:str)
     Example usage with FFMPEG:
 
     \b
-      ffmpeg -i input.mp4 -ss 10 -an -f rawvideo -pix_fmt rgb24 pipe:1 | python rembg.py v 1280 720 out%03u.png
+      ffmpeg -i input.mp4 -ss 10 -an -f rawvideo -pix_fmt rgb24 pipe:1 | python me2net.py v 1280 720 out%03u.png
 
     The width and height values must match the dimension of output images from FFMPEG.
     Note for FFMPEG, the "-an -f rawvideo -pix_fmt rgb24 pipe:1" part is required.
